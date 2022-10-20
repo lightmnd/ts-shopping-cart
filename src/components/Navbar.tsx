@@ -1,7 +1,13 @@
+import React, { useState } from "react";
 import { Navbar as NavbarBs, Container, Nav, Button } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+import { useShoppingCart } from "../context/shoppingCartContext";
+import CartOpen from "./CartOpen";
 
 export function Navbar() {
+  const [open, setOpenClose] = useState(false);
+  const { openCart, isOpen }: any = useShoppingCart();
+  console.log(isOpen);
   return (
     <NavbarBs sticky={"top"} className="bg-white shadow-sm mb-3">
       <Container className="navbar-container">
@@ -18,6 +24,11 @@ export function Navbar() {
           </Nav.Link>
         </Nav>
         <Button
+          onClick={
+            open ? () => setOpenClose(false) : () => setOpenClose(true)
+            // () => openCart(true)
+            // items.isOpen ? () => items.openCart(false) : items.openCart(true)
+          }
           className="rounded-circle"
           variant="outline-dark"
           style={{ width: "3rem", height: "3rem", position: "relative " }}
@@ -54,6 +65,7 @@ export function Navbar() {
           </div>
         </Button>
       </Container>
+      {open && <CartOpen />}
     </NavbarBs>
   );
 }

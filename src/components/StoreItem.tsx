@@ -43,7 +43,6 @@ export function StoreItem({
           <Card.Text className="text-muted lead fw-normal mb-0">
             {formatCurrency(price)}
           </Card.Text>
-          {console.log(quantity)}
           {quantity === 0 ? (
             <Button
               onClick={() => increaseItemQuantity(id)}
