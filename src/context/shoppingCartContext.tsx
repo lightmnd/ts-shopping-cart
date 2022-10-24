@@ -32,8 +32,8 @@ export function ShoppingCartProvider({
 }: ShoppingCartContextProviderCtx) {
   const [isOpen, setIsOpen] = useState(true);
   const [cartItems, setCartQuantity] = useState<CartItem[]>([]);
-  const openCart = (booly: boolean) => setIsOpen(booly);
-  const closeCart = (falsy: boolean) => setIsOpen(falsy);
+  const openCart = () => setIsOpen(true);
+  const closeCart = () => setIsOpen(false);
   //   const cartQty = cartItems.reduce((quantity) => quantity);
   //   console.log(cartQty);
 
