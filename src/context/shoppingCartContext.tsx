@@ -7,10 +7,34 @@ type ShoppingCartContextProviderCtx = {
 type ShoppingCartContextFunctions = {
   openCart: () => void;
   closeCart: () => void;
-  getItemQuantity: (id: number) => number;
-  increaseItemQuantity: (id: number) => void;
-  decreaseItemQuantity: (id: number) => void;
-  removeItemQuantity: (id: number) => void;
+  getItemQuantity: (
+    id: number,
+    category: string,
+    description: string,
+    image: string,
+    price: number
+  ) => number;
+  increaseItemQuantity: (
+    id: number,
+    category: string,
+    description: string,
+    image: string,
+    price: number
+  ) => void;
+  decreaseItemQuantity: (
+    id: number,
+    category: string,
+    description: string,
+    image: string,
+    price: number
+  ) => void;
+  removeItemQuantity: (
+    id: number,
+    category: string,
+    description: string,
+    image: string,
+    price: number
+  ) => void;
   cartQty: number;
   cartItems: CartItem[];
   isOpen: boolean;
@@ -19,6 +43,9 @@ type ShoppingCartContextFunctions = {
 type CartItem = {
   id: number;
   quantity: number;
+  description: string;
+  price: number;
+  category: string;
 };
 
 const ShoppingCartContext = createContext({} as ShoppingCartContextFunctions);
@@ -34,23 +61,48 @@ export function ShoppingCartProvider({
   const [cartItems, setCartQuantity] = useState<CartItem[]>([]);
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
-  //   const cartQty = cartItems.reduce((quantity) => quantity);
-  //   console.log(cartQty);
 
-  function getItemQuantity(id: number): number {
+  function getItemQuantity(
+    id: number,
+    category: string,
+    description: string,
+    image: string,
+    price: number
+  ): number {
     return cartItems.find((item) => item.id === id)?.quantity || 0;
   }
 
-  function removeItemQuantity(id: number) {
+  function removeItemQuantity(
+    id: number,
+    category: string,
+    description: string,
+    image: string,
+    price: number
+  ) {
     setCartQuantity((cartItems) => {
       return cartItems.filter((item) => item.id !== id);
     });
   }
 
-  function increaseItemQuantity(id: number) {
+  function increaseItemQuantity(
+    id: number,
+    category: string,
+    description: string,
+    image: string,
+    price: number
+  ) {
     setCartQuantity((cartItems) => {
       if (cartItems.find((item) => item.id === id) == null) {
-        return [...cartItems, { id, quantity: 1 }];
+        return [
+          ...cartItems,
+          {
+            id,
+            quantity: 1,
+            category: category,
+            description: description,
+            price: price,
+          },
+        ];
       } else {
         return cartItems.map((item) => {
           if (item.id === id) {
@@ -63,7 +115,13 @@ export function ShoppingCartProvider({
     });
   }
 
-  function decreaseItemQuantity(id: number) {
+  function decreaseItemQuantity(
+    id: number,
+    category: string,
+    description: string,
+    image: string,
+    price: number
+  ) {
     setCartQuantity((cartItems) => {
       if (cartItems.find((item) => item.id === id)?.quantity === 1) {
         return cartItems.filter((elem) => elem.id !== id);
@@ -88,6 +146,7 @@ export function ShoppingCartProvider({
         decreaseItemQuantity,
         openCart,
         closeCart,
+        cartItems,
         isOpen,
       }}
     >

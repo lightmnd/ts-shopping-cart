@@ -24,7 +24,13 @@ export function StoreItem({
     decreaseItemQuantity,
   } = useShoppingCart();
 
-  const quantity: number = getItemQuantity(id);
+  const quantity: number = getItemQuantity(
+    id,
+    category,
+    description,
+    image,
+    price
+  );
 
   return (
     <Card className="h-100">
@@ -45,7 +51,9 @@ export function StoreItem({
           </Card.Text>
           {quantity === 0 ? (
             <Button
-              onClick={() => increaseItemQuantity(id)}
+              onClick={() =>
+                increaseItemQuantity(id, category, description, image, price)
+              }
               className=""
               variant="primary"
             >
@@ -54,13 +62,42 @@ export function StoreItem({
           ) : (
             <div className="d-flex flex-column justify-content-center align-items-center">
               <div className="d-flex flex-row justify-content-center align-items-center">
-                <Button onClick={() => increaseItemQuantity(id)}>+</Button>
+                <Button
+                  onClick={() =>
+                    increaseItemQuantity(
+                      id,
+                      category,
+                      description,
+                      image,
+                      price
+                    )
+                  }
+                >
+                  +
+                </Button>
                 <div className="d-flex align-items-center p-1">
                   <span className="fs-3 pe-2">{quantity}</span>in cart
                 </div>
-                <Button onClick={() => decreaseItemQuantity(id)}>-</Button>
+                <Button
+                  onClick={() =>
+                    decreaseItemQuantity(
+                      id,
+                      category,
+                      description,
+                      image,
+                      price
+                    )
+                  }
+                >
+                  -
+                </Button>
               </div>
-              <Button onClick={() => removeItemQuantity(id)} variant="danger">
+              <Button
+                onClick={() =>
+                  removeItemQuantity(id, category, description, image, price)
+                }
+                variant="danger"
+              >
                 remove
               </Button>
             </div>

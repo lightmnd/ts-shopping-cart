@@ -6,8 +6,7 @@ import CartOpen from "./CartOpen";
 
 export function Navbar() {
   const [open, setOpenClose] = useState(false);
-  const { openCart, closeCart }: any = useShoppingCart();
-  // console.log(isOpen);
+  const { ...items }: any = useShoppingCart();
   return (
     <NavbarBs sticky={"top"} className="bg-white shadow-sm mb-3">
       <Container className="navbar-container">
@@ -24,7 +23,7 @@ export function Navbar() {
           </Nav.Link>
         </Nav>
       </Container>
-      {<CartOpen openCart closeCart />}
+      {<CartOpen {...items} />}
     </NavbarBs>
   );
 }

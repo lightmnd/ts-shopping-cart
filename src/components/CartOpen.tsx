@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { Button, Offcanvas } from "react-bootstrap";
+import { Button, Offcanvas, Stack } from "react-bootstrap";
 import { useShoppingCart } from "../context/shoppingCartContext";
+import ItemCartList from "./ItemCartList";
+import { StoreItem } from "./StoreItem";
 
-type HandleCartVisibility = {
-  openCart: boolean;
-  closeCart: boolean;
-};
+// type HandleCartVisibility = {
+//   openCart: boolean;
+//   closeCart: boolean;
+// };
 
-export default function CartOpen({
-  openCart,
-  closeCart,
-}: HandleCartVisibility) {
+export default function CartOpen({ ...items }) {
+  let total: number = 0;
+  const { cartItems, getItemQuantity } = useShoppingCart();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -60,8 +61,33 @@ export default function CartOpen({
           <Offcanvas.Title>Offcanvas</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
-          Some text as placeholder. In real life you can have the elements you
-          have chosen. Like, text, images, lists, etc.
+          <Stack gap={3}>
+            {cartItems?.length === 0 ? (
+              <Stack gap={3}>Your cart is Empty</Stack>
+            ) : (
+              cartItems?.map((item: any, idx: number) => {
+                total += item.price * item.quantity;
+                return (
+                  <>
+                    <ItemCartList
+                      id={item.id}
+                      quantity={item.quantity}
+                      category={item.category}
+                      price={item.price}
+                      total={total}
+                    />
+                  </>
+                );
+              })
+            )}
+            {cartItems?.length !== 0 && (
+              <>
+                <div className="bg-light border d-flex align-self-end">
+                  {total}
+                </div>
+              </>
+            )}
+          </Stack>
         </Offcanvas.Body>
       </Offcanvas>
     </>

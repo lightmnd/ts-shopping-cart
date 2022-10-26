@@ -18,7 +18,13 @@ export function Store() {
           {elem?.map((item: any) => {
             return (
               <Col key={item.id}>
-                <StoreItem {...item} />
+                <StoreItem
+                  id={item.id}
+                  category={item.category}
+                  description={item.description}
+                  image={item.image}
+                  price={item.id}
+                />
               </Col>
             );
           })}
