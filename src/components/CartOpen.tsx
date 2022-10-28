@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Offcanvas, Stack } from "react-bootstrap";
 import { useShoppingCart } from "../context/shoppingCartContext";
+import { formatCurrency } from "../utilities/formatCurrency";
 import ItemCartList from "./ItemCartList";
 import { StoreItem } from "./StoreItem";
 
@@ -83,7 +84,7 @@ export default function CartOpen({ ...items }) {
             {cartItems?.length !== 0 && (
               <>
                 <div className="bg-light border d-flex align-self-end">
-                  {total}
+                  {formatCurrency(parseFloat(total.toFixed(2)))}
                 </div>
               </>
             )}
