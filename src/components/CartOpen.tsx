@@ -14,9 +14,14 @@ export default function CartOpen({ ...items }) {
   let total: number = 0;
   const { cartItems, getItemQuantity } = useShoppingCart();
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
+
+  // calculate total quantity
+  let totalQty: number = 0;
+  cartItems?.map((item) => {
+    totalQty += item.quantity;
+  });
 
   return (
     <>
@@ -54,7 +59,7 @@ export default function CartOpen({ ...items }) {
             transform: "translate(25%, 25%)",
           }}
         >
-          3
+          {totalQty}
         </div>
       </Button>
       <Offcanvas show={show} onHide={handleClose} placement={"end"}>
