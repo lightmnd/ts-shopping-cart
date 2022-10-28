@@ -12,7 +12,7 @@ import { StoreItem } from "./StoreItem";
 
 export default function CartOpen({ ...items }) {
   let total: number = 0;
-  const { cartItems, getItemQuantity } = useShoppingCart();
+  const { cartItems, getItemQuantity, removeItemQuantity } = useShoppingCart();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
@@ -81,6 +81,7 @@ export default function CartOpen({ ...items }) {
                       category={item.category}
                       price={item.price}
                       total={total}
+                      removeItemQuantity={removeItemQuantity}
                     />
                   </>
                 );
