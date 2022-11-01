@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Offcanvas, Stack } from "react-bootstrap";
 import { useShoppingCart } from "../context/shoppingCartContext";
 import { formatCurrency } from "../utilities/formatCurrency";
@@ -19,10 +19,9 @@ export default function CartOpen({ ...items }) {
 
   // calculate total quantity
   let totalQty: number = 0;
-  cartItems?.map((item) => {
+  cartItems?.map((item: any) => {
     totalQty += item.quantity;
   });
-
   return (
     <>
       <Button

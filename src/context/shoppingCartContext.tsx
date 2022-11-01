@@ -1,4 +1,11 @@
-import { useContext, createContext, useState } from "react";
+import {
+  useContext,
+  createContext,
+  useState,
+  useEffect,
+  useReducer,
+} from "react";
+import { useCustomHookToStoreLocalData } from "../hooks/storeData";
 
 type ShoppingCartContextProviderCtx = {
   children: ReactNode;
@@ -40,7 +47,7 @@ type ShoppingCartContextFunctions = {
   isOpen: boolean;
 };
 
-type CartItem = {
+export type CartItem = {
   id: number;
   quantity: number;
   description: string;
@@ -54,13 +61,33 @@ export function useShoppingCart() {
   return useContext(ShoppingCartContext);
 }
 
+// function reducer(state, action) {
+//   switch (action.type) {
+//     case "ADD_TO_CART":
+//       console.log(action.type, action.payload, state);
+//       return { ...state, cartItemsStored: action.payload };
+//     default:
+//       return state;
+//   }
+// }
+
 export function ShoppingCartProvider({
   children,
 }: ShoppingCartContextProviderCtx) {
   const [isOpen, setIsOpen] = useState(true);
-  const [cartItems, setCartQuantity] = useState<CartItem[]>([]);
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
+
+  // let itemStored: any = cartItems;
+  const [cartItems, setCartQuantity] = useState<CartItem[]>(
+    JSON.parse(localStorage.getItem("localData")) || []
+  );
+
+  useEffect(() => {
+    if (cartItems) {
+      localStorage.setItem("localData", JSON.stringify(cartItems || []));
+    }
+  }, [cartItems]);
 
   function getItemQuantity(
     id: number,
